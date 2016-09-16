@@ -1,6 +1,9 @@
 var React = require('react');
 var moment = require('moment');
 
+var DISPLAY_FORMAT = "DD.MM.YYYY";
+var EDIT_FORMAT = "YYYY-MM-DD";
+
 var ExpenseRow = React.createClass({
 	getInitialState: function() {
 		return this.getDefaultState();
@@ -19,7 +22,7 @@ var ExpenseRow = React.createClass({
 	handleDateChange: function(e) {
 		var val = e.target.value;
 		this.setState(s => {
-			s.rowData.date = moment(val, "YYYY-MM-DD");
+			s.rowData.date = moment(val, "EDIT_FORMAT");
 			return s
 		});
 	},
@@ -62,7 +65,7 @@ var ExpenseRow = React.createClass({
 	render: function() {
 		var formattedDate = "";
 		if (this.state.isEditing) {
-			formattedDate = moment(this.state.rowData.date, "DD-MM-YYYY").format("YYYY-MM-DD").toString();
+			formattedDate = moment(this.state.rowData.date, "DD-MM-YYYY").format("EDIT_FORMAT").toString();
 			return (
 				<tr>
 					<td><input type="date" value={formattedDate} onChange={this.handleDateChange} /></td>
@@ -76,7 +79,7 @@ var ExpenseRow = React.createClass({
 			);
 		}
 
-		formattedDate = moment(this.state.rowData.date, "DD.MM.YYYY", true).format("DD.MM.YYYY");
+		formattedDate = moment(this.state.rowData.date, "DISPLAY_FORMAT", true).format("DISPLAY_FORMAT");
 		return (
 			<tr onClick={this.handleEditModeChange}>
 				<td>{formattedDate}</td>
