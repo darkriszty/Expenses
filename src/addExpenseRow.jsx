@@ -44,7 +44,7 @@ var AddExpenseRow = React.createClass({
 		};
 		this.props.onExpenseAdded(newRowData);
 		// clear current state
-		this.setState(s => function (){
+		this.setState(s => {
 			s.date = moment(new Date(), EDIT_FORMAT);
 			s.amount = 0;
 			s.description = "";
