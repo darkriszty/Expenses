@@ -1,18 +1,40 @@
 var React = require('react');
-var ExpenseRow = require('./ExpenseRow');
+var ExpenseRow = require('./expenseRow');
+var AddExpenseRow = require('./addExpenseRow');
 
 var ExpensesTable = React.createClass({
+	createRow: function(id, date, amount, description, category, isEditing) {
+		return (
+			<ExpenseRow
+				key={id}
+				date={date}
+				amount={amount}
+				description={description}
+				category={category}
+				isEditing={isEditing}
+				onExpenseUpdated={this.handleRowUpdated} />
+		);
+	},
+
+	handleRowUpdated: function(updatedExpenseData) {
+		this.props.onExpenseUpdated(updatedExpenseData);
+	},
+
+	handleExpenseAdded: function(addedExpenseData) {
+		this.props.onExpenseAdded(addedExpenseData);
+	},
+
+	getInitialState: function() {
+		return {expenseRows: []};
+	},
+
 	render: function() {
-		var expenseRows = this.props.expensesData.map(function (expense) {
-			return (
-				<ExpenseRow
-					key={expense.id}
-					date={expense.date}
-					amount={expense.amount}
-					description={expense.description}
-					category={expense.category} />
-			);
-		});
+		var expenseRows = this.props.expensesRows.map(function (expense) {
+			return this.createRow(
+				expense.id, expense.date, expense.amount, expense.description,
+				expense.category, false);
+		}.bind(this));
+
 		return (
 			<table>
 				<thead>
@@ -25,6 +47,7 @@ var ExpensesTable = React.createClass({
 				</thead>
 				<tbody>
 					{expenseRows}
+					<AddExpenseRow onExpenseAdded={this.handleExpenseAdded} />
 				</tbody>
 			</table>
 		);

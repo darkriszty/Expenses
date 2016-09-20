@@ -1,6 +1,5 @@
 var React = require('react');
 var ExpensesTable = require('./expensesTable');
-var ExpensesForm = require('./expensesForm');
 
 var ExpensesContainer = React.createClass({
 	loadExpensesFromServer: function() {
@@ -21,10 +20,14 @@ var ExpensesContainer = React.createClass({
 		return {expensesData: []};
 	},
 
-	handleExpenseAdded: function(expense) {
-		expense.id = Date.now();
-		var newExpenses = this.state.expensesData.concat([expense]);
-		this.setState({ expensesData: newExpenses });
+	handleAddExpense: function(newExpenseData) {
+		var currentData = this.state.expensesData;
+        newExpenseData.id = Date.now();
+        var newExpenses = currentData.concat([newExpenseData]);
+        this.setState({expensesData: newExpenses});
+	},
+	handleUpdateExpense: function(updatedExpenseData) {
+
 	},
 
 	componentDidMount: function() {
@@ -35,8 +38,10 @@ var ExpensesContainer = React.createClass({
 		return (
 			<div className="expensesContainer">
 				<h1>Expenses</h1>
-				<ExpensesTable expensesData={this.state.expensesData} />
-				<ExpensesForm onExpenseAdded={this.handleExpenseAdded} />
+				<ExpensesTable
+					expensesRows={this.state.expensesData}
+					onExpenseAdded={this.handleAddExpense}
+					onExpenseUpdated={this.handleUpdateExpense} />
 			</div>
 		);
 	}
