@@ -38,7 +38,7 @@ var AddExpenseRow = React.createClass({
 		// send the new data to the parent
 		var newRowData = {
 			date: this.state.date,
-			amoumt: this.state.amount,
+			amount: this.state.amount,
 			description: this.state.description,
 			category: this.state.category
 		};
