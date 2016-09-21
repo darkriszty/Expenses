@@ -87,6 +87,8 @@ var ExpenseRow = React.createClass({
 	handleInputKeyDown: function(e) {
 		if (e.keyCode === 13)
 			this.handleEditModeChange(e);
+		else if (e.keyCode === 27)
+			this.handleCancel(e);
 	},
 	render: function() {
 		var formattedDate = "";

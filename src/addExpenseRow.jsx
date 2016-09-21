@@ -7,6 +7,9 @@ var AddExpenseRow = React.createClass({
 	getInitialState: function() {
 		return this.getDefaultState();
 	},
+	componentDidMount: function() {
+		this.focusInput();
+	},
 	getDefaultState: function() {
 		return {
 			date: moment(new Date(), EDIT_FORMAT),
@@ -14,6 +17,9 @@ var AddExpenseRow = React.createClass({
 			description: "",
 			category: ""
 		};
+	},
+	focusInput: function() {
+		document.getElementById("amount").focus();
 	},
 	handleDateChange: function(e) {
 		this.setState({date: moment(e.target.value, EDIT_FORMAT)});
@@ -50,16 +56,21 @@ var AddExpenseRow = React.createClass({
 			s.description = "";
 			s.category = "";
 		});
+		this.focusInput();
+	},
+	handleInputKeyDown: function(e) {
+		if (e.keyCode === 13)
+			this.handleAddExpense(e);
 	},
 	render: function() {
 		var formattedDate = this.state.date.format(EDIT_FORMAT).toString();
 		return (
 			<tr>
-				<td><input type="date" value={formattedDate} onChange={this.handleDateChange} /></td>
-				<td><input type="number" min="0" step="any" placeholder="amount" value={this.state.amount} onChange={this.handleAmountChange} /></td>
-				<td><input type="text" placeholder="description" value={this.state.description} onChange={this.handleDescriptionChange} /></td>
+				<td><input type="date" value={formattedDate} onChange={this.handleDateChange} onKeyDown={this.handleInputKeyDown} /></td>
+				<td><input id="amount" type="number" min="0" step="any" placeholder="amount" value={this.state.amount} onChange={this.handleAmountChange} onKeyDown={this.handleInputKeyDown} /></td>
+				<td><input type="text" placeholder="description" value={this.state.description} onChange={this.handleDescriptionChange} onKeyDown={this.handleInputKeyDown} /></td>
 				<td>
-					<input type="text" placeholder="category" value={this.state.category} onChange={this.handleCategoryChange} />
+					<input type="text" placeholder="category" value={this.state.category} onChange={this.handleCategoryChange} onKeyDown={this.handleInputKeyDown} />
 					<input type="submit" value="Add" onClick={this.handleAddExpense} />
 				</td>
 			</tr>
