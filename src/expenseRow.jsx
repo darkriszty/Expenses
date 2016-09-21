@@ -12,7 +12,7 @@ var ExpenseRow = React.createClass({
 		return {
 			isEditing: this.props.isEditing,
 			expenseData: {
-				date: moment(this.props.date, EDIT_FORMAT),
+				date: moment(this.props.date, DISPLAY_FORMAT),
 				amount: this.props.amount,
 				description: this.props.description,
 				category: this.props.category
@@ -22,7 +22,7 @@ var ExpenseRow = React.createClass({
 	handleDateChange: function(e) {
 		var val = e.target.value;
 		this.setState(s => {
-			s.expenseData.date = moment(val, "DD-MM-YYYY");
+			s.expenseData.date = moment(val, EDIT_FORMAT);
 			return s;
 		});
 	},
@@ -66,7 +66,7 @@ var ExpenseRow = React.createClass({
 	render: function() {
 		var formattedDate = "";
 		if (this.state.isEditing) {
-			formattedDate = moment(this.state.expenseData.date, "DD-MM-YYYY").format(EDIT_FORMAT).toString();
+			formattedDate = this.state.expenseData.date.format(EDIT_FORMAT).toString();
 			return (
 				<tr>
 					<td><input type="date" value={formattedDate} onChange={this.handleDateChange} /></td>
