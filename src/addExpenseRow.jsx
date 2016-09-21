@@ -16,7 +16,7 @@ var AddExpenseRow = React.createClass({
 		};
 	},
 	handleDateChange: function(e) {
-		this.setState({date: moment(e.target.value, "DD-MM-YYYY")});
+		this.setState({date: moment(e.target.value, EDIT_FORMAT)});
 	},
 	handleAmountChange: function(e) {
 		this.setState({amount: e.target.value});
@@ -52,7 +52,7 @@ var AddExpenseRow = React.createClass({
 		});
 	},
 	render: function() {
-		var formattedDate = moment(this.state.date, "DD-MM-YYYY").format(EDIT_FORMAT).toString();
+		var formattedDate = this.state.date.format(EDIT_FORMAT).toString();
 		return (
 			<tr>
 				<td><input type="date" value={formattedDate} onChange={this.handleDateChange} /></td>
