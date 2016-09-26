@@ -7,6 +7,7 @@ var ExpensesTable = React.createClass({
 		return (
 			<ExpenseRow
 				key={id}
+				rowId={id}
 				date={date}
 				amount={amount}
 				description={description}
