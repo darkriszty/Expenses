@@ -63,7 +63,6 @@ export default class ExpenseRow extends React.Component {
 		var id = e.target.id;
 
 		this.setState(s => {
-			console.log(id);
 			s.isEditing = !s.isEditing;
 			s.editingCellId = id,
 			s.expenseData.date = s.editedExpenseData.date;
@@ -76,8 +75,10 @@ export default class ExpenseRow extends React.Component {
 		this.props.onExpenseUpdated(this.state.expenseData);
 	}
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.isEditing)
+		if (this.state.isEditing && !!this.state.editingCellId) {
 			document.getElementById(this.state.editingCellId).querySelector("input:first-of-type").focus();
+			this.setState({editingCellId: null});
+		}
 	}
 	handleCancel(e) {
 		e.preventDefault();
