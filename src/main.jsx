@@ -1,5 +1,5 @@
-var ReactDOM = require('react-dom');
-var ExpensesContainer = require('./expensesContainer');
+import ReactDOM from "react-dom";
+import ExpensesContainer from "./ExpensesContainer"
 
 ReactDOM.render(
 	<ExpensesContainer expensesDataUrl='api/v1/expenses' />,

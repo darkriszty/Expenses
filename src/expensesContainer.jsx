@@ -1,8 +1,12 @@
-var React = require('react');
-var ExpensesTable = require('./expensesTable');
+import React from "react";
+import ExpensesTable from "./ExpensesTable"
 
-var ExpensesContainer = React.createClass({
-	loadExpensesFromServer: function() {
+export default class ExppensesContainer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { expensesData : [] };
+	}
+	loadExpensesFromServer() {
 		$.ajax({
 			url: this.props.expensesDataUrl,
 			dataType: 'json',
@@ -14,37 +18,31 @@ var ExpensesContainer = React.createClass({
 				console.error(this.props.expensesDataUrl, status, err.toString());
 			}.bind(this)
 		});
-	},
+	}
 
-	getInitialState: function() {
-		return {expensesData: []};
-	},
-
-	handleAddExpense: function(newExpenseData) {
+	handleAddExpense(newExpenseData) {
 		var currentData = this.state.expensesData;
         newExpenseData.id = Date.now();
         var newExpenses = currentData.concat([newExpenseData]);
         this.setState({expensesData: newExpenses});
-	},
-	handleUpdateExpense: function(updatedExpenseData) {
+	}
+	handleUpdateExpense(updatedExpenseData) {
 
-	},
+	}
 
-	componentDidMount: function() {
+	componentDidMount() {
 		this.loadExpensesFromServer();
-	},
+	}
 
-	render: function() {
+	render() {
 		return (
 			<div className="expensesContainer">
 				<h1>Expenses</h1>
 				<ExpensesTable
 					expensesRows={this.state.expensesData}
-					onExpenseAdded={this.handleAddExpense}
-					onExpenseUpdated={this.handleUpdateExpense} />
+					onExpenseAdded={this.handleAddExpense.bind(this)}
+					onExpenseUpdated={this.handleUpdateExpense.bind(this)} />
 			</div>
 		);
 	}
-});
-
-module.exports = ExpensesContainer;
+}
